@@ -10,7 +10,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
-    var images = mutableListOf<ImageView>()
+    var images:MutableList<ImageView> = mutableListOf()
     var index = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,17 +43,28 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             } else {
                 index = 0
             }
+            img.setImageResource(images[index])
+        }
 
+        previous.setOnClickListener {
+            if (index == 0){
+                index = images.size
+            }
+            index--
+            img.setImageResource(images[index])
         }
 
     }
 
     @SuppressLint("ResourceType")
     override fun onClick(p0: View?) {
-        var img = findViewById<ImageView>(p0!!.id)
+        val img = findViewById<ImageView>(p0!!.id)
+        val tag = img.tag.toString().toInt()
         image_layout.visibility = View.GONE
         action_layout.visibility = View.VISIBLE
-        img.setImageResource(img.id)
+        img.setImageResource(images[tag])
 
     }
 }
+
+
